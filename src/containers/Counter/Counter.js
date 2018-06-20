@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CounterControl from '../../components/CounterControl/CounterControl';
 import CounterOutput from '../../components/CounterOutput/CounterOutput';
+import * as actionTypes from '../../store/actions';
 
 class Counter extends Component {
     state = {
@@ -34,7 +35,7 @@ class Counter extends Component {
                 <CounterControl label="Add 5" clicked={this.props.onAddCounter}  />
                 <CounterControl label="Subtract 5" clicked={this.props.onSubtractCounter}  />
                 <hr />
-                <button onClick={this.props.onStoreResult}> STORE RESULT</button>
+                <button onClick={() => this.props.onStoreResult(this.props.ctr)}> STORE RESULT</button>
                 <ul>
                     {this.props.storedResults.map( strResult =>(
                         <li 
@@ -51,19 +52,19 @@ class Counter extends Component {
 
 const mapStateToProps = state => {
     return {
-        ctr: state.counter,
-        storedResults: state.results
+        ctr: state.ctr.counter,
+        storedResults: state.res.results
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIncrementCounter: () => dispatch({type:'INCREMENT'}),
-        onDecrementCounter: () => dispatch({type:'DECREMENT'}),
-        onAddCounter:       () => dispatch({type:'ADD', payload:{ value:5}} ),
-        onSubtractCounter:  () => dispatch({type:'SUBTRACT', payload:{ value:5}} ),
-        onStoreResult:      ()=> dispatch({type: 'STORE_RESULT', payload:{} }),
-        onDeleteResult:     (id)=> dispatch({type: 'DELETE_RESULT', payload:{id:id} }),
+        onIncrementCounter: ()   => dispatch({type: actionTypes.INCREMENT}),
+        onDecrementCounter: ()   => dispatch({type: actionTypes.DECREMENT}),
+        onAddCounter:       ()   => dispatch({type: actionTypes.ADD,           payload:{ value:5}} ),
+        onSubtractCounter:  ()   => dispatch({type: actionTypes.SUBTRACT,      payload:{ value:5}} ),
+        onStoreResult:      (result)   => dispatch({type: actionTypes.STORE_RESULT,  payload:{result:result} }),
+        onDeleteResult:     (id) => dispatch({type: actionTypes.DELETE_RESULT, payload:{id:id} }),
     };
 
     

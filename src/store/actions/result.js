@@ -6,11 +6,11 @@ export const saveResult = (res) => {
         payload:{
             result:res
         }
-    }
-}
+    };
+};
 
 export const storeResult = res => {
-    return dispatch => {
+    return (dispatch) => {
         setTimeout(() => {
             dispatch(saveResult(res));
         },2000);
